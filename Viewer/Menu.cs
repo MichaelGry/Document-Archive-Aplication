@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Document_Archive.Model;
 
 namespace Document_Archive.Viewer
 {
     static class Menu
     {
         #region Elements menu
-        static readonly Action addDocument = () => { };
+        static readonly Action addDocument = () => 
+        {
+            
+        };
         static readonly SortedList<int, MenuItem> MenuItems = new()
         {
             { 1, new MenuItem("Add new document to your repository", addDocument)}

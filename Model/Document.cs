@@ -18,5 +18,12 @@ namespace Document_Archive.Model
         public DateTime CreationDate { get; set; }
         public string Category { get; set; }
         public DocumentLocation Location { get; set; }
+
+        public override string ToString()
+        {
+            string s = Name + ", category " + Category + ", created: " +
+                CreationDate.ToString("D");
+            return s;
+        }
     }
 }
