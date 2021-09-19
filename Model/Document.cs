@@ -8,7 +8,21 @@ namespace Document_Archive.Model
 {
     public class Folder
     {
-        List<Document> Documents;
+        public string Name
+        {
+            get => Name;
+            set
+            {
+                if (value == "") Name = "no folder";
+                else Name = value;
+            }
+        }
+        public int Id;
+
+        public Folder(string name)
+        {
+            Name = name;
+        }
     }
     public class Document
     {
@@ -17,6 +31,7 @@ namespace Document_Archive.Model
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public string Category { get; set; }
+        public Folder Folder { get; set; }
         public Document()
         {
             Id = ++actualId;

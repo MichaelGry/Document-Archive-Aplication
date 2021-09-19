@@ -11,7 +11,7 @@ namespace Document_Archive.Model
     {
         public void AddOrUpdateXmlFile()
         {
-            Document document = Enter.AddDocument();
+            Document document = Enter.GetDocumentFromUser();
             //System.IO.File.WriteAllText("test.txt", document.ToString());
         }
     }

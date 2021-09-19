@@ -26,7 +26,7 @@ namespace Document_Archive.Controler
                 return -1;
             }
         } //return int from keyboard or -1 when error exception
-        public static Document AddDocument()
+        public static Document GetDocumentFromUser()
         {
             Document document = new Document();
             Console.WriteLine("Specify the parameters of the new document\n\nName: ");
@@ -34,6 +34,9 @@ namespace Document_Archive.Controler
             Console.WriteLine("Category: ");
             document.Category = Console.ReadLine();
             document.CreationDate = InputDateTime().Date;
+
+            Console.WriteLine("Folder it is in: ");
+            document.Folder = new Folder(Console.ReadLine());
 
             return document;
         }
