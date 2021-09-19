@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 
 namespace Document_Archive.Model
 {
-    class DocumentLocation
+    public class Folder
     {
-        string folder;
-        string box;
+        List<Document> Documents;
     }
-    class Document
+    public class Document
     {
+        static private int actualId = 0;
         public int Id { get; set; } //primary key
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public string Category { get; set; }
-        public DocumentLocation Location { get; set; }
+        public Document()
+        {
+            Id = ++actualId;
+        }
 
         public override string ToString()
         {
