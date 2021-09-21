@@ -8,13 +8,14 @@ namespace Document_Archive.Model
 {
     public class Folder
     {
+        private string name;
         public string Name
         {
-            get => Name;
+            get => name;
             set
             {
-                if (value == "") Name = "no folder";
-                else Name = value;
+                if (value == "") name = "no folder";
+                else name = value;
             }
         }
         public int Id { get; set; }
@@ -32,10 +33,6 @@ namespace Document_Archive.Model
         public DateTime CreationDate { get; set; }
         public string Category { get; set; }
         public Folder Folder { get; set; }
-        public Document()
-        {
-            Id = ++actualId;
-        }
 
         public override string ToString()
         {
