@@ -13,8 +13,12 @@ namespace Document_Archive.Controler
         public static void StartProgram()
         {
             DataBaseDocuments dataBase = new DataBaseDocuments();
-            Menu.addDocument = () => { dataBase.AddDocumentToDb(Enter.GetDocumentFromUser()); };
-            Menu.ShowMenu();
+            Menu MyMenu = new Menu();
+            #region Menu elements
+            Action addDocument = () => { dataBase.AddDocumentToDb(Enter.GetDocumentFromUser()); };
+            MyMenu.MenuItems.Add(1, new MenuItem("Add new document to your repository", addDocument));
+            #endregion
+            MyMenu.ShowMenu();
         }
     }
 }

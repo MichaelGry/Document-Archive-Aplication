@@ -7,16 +7,10 @@ using Document_Archive.Model;
 
 namespace Document_Archive.Viewer
 {
-    public static class Menu
+    public class Menu
     {
-        #region Elements menu
-        public static  Action addDocument;
-        public static  SortedList<int, MenuItem> MenuItems = new()
-        {
-            { 1, new MenuItem("Add new document to your repository", addDocument)}
-        };
-        #endregion
-        public static void ShowMenu()
+        public SortedList<int, MenuItem> MenuItems = new();
+        public void ShowMenu()
         {
             int yourChoose = 0;
             do
@@ -31,7 +25,7 @@ namespace Document_Archive.Viewer
                 } catch (Exception exc) { }
             } while (yourChoose != 0);
         }
-        static void ShowItems()
+        protected void ShowItems()
         {
             foreach (KeyValuePair<int, MenuItem> menuItem in MenuItems)
                 Console.WriteLine(menuItem.Key.ToString() + ". " + menuItem.Value.Description);
