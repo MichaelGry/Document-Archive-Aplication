@@ -37,6 +37,7 @@ namespace Document_Archive.Model
         }
         public int AddDocumentToDb(Document document)
         {
+            Console.WriteLine("Adds the documets...");
             if (document == null) throw new ArgumentNullException(
                  "An empty reference is given as an argument");
             if (document.Folder == null) throw new ArgumentException("No folder");
@@ -48,6 +49,8 @@ namespace Document_Archive.Model
 
             dbc.Documents.Add(document);
             dbc.SaveChanges();
+            Console.WriteLine("Added succesfull.\nPress any key to continue...");
+            Console.ReadLine();
             return document.Id;
         }
     }

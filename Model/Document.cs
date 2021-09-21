@@ -17,7 +17,7 @@ namespace Document_Archive.Model
                 else Name = value;
             }
         }
-        public int Id;
+        public int Id { get; set; }
 
         public Folder(string name)
         {

@@ -6,7 +6,7 @@ namespace Document_Archive
     {
         static void Main(string[] args)
         {
-            Viewer.Menu.ShowMenu();
+            Controler.Start.StartProgram();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Document_Archive.Viewer
 {
-    class MenuItem
+    public class MenuItem
     {
         public string Description { get; set; }
         public Action action;

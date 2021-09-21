@@ -7,22 +7,17 @@ using Document_Archive.Model;
 
 namespace Document_Archive.Viewer
 {
-    static class Menu
+    public static class Menu
     {
         #region Elements menu
-        static readonly Action addDocument = () => 
-        {
-            
-        };
-        static readonly SortedList<int, MenuItem> MenuItems = new()
+        public static  Action addDocument;
+        public static  SortedList<int, MenuItem> MenuItems = new()
         {
             { 1, new MenuItem("Add new document to your repository", addDocument)}
         };
         #endregion
         public static void ShowMenu()
         {
-            
-
             int yourChoose = 0;
             do
             {
