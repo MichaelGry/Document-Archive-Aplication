@@ -19,15 +19,18 @@ namespace Document_Archive.Model
             }
         }
         public int Id { get; set; }
-
+        public List<Document> Documents = new List<Document>(); 
         public Folder(string name)
         {
             Name = name;
         }
+        public override string ToString()
+        {
+            return "Id: " + Id + "      Folder name: " + Name;
+        }
     }
     public class Document
     {
-        static private int actualId = 0;
         public int Id { get; set; } //primary key
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
@@ -36,8 +39,16 @@ namespace Document_Archive.Model
 
         public override string ToString()
         {
-            string s = Name + ", category " + Category + ", created: " +
-                CreationDate.ToString("D");
+            string s = Name + ", category " + Category + (Folder == null ? 
+                ("") : (", folder in: " + Folder.Name)) + ", created: " + CreationDate.ToString("D");
+            return s;
+        }
+        public string ToString(int indentationLevel)
+        {
+            const int indentantionValue = 4;
+            string s = "".PadLeft(indentationLevel * indentantionValue) + "Document name:".PadRight(20) + Name +
+                "\n" + "".PadLeft(indentationLevel * indentantionValue) + "Category:".PadRight(20) + Category +
+                "\n" + "".PadLeft(indentationLevel * indentantionValue) + "Created:".PadRight(20) + CreationDate.ToString("D");
             return s;
         }
     }

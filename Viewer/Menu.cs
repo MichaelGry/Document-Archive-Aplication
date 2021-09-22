@@ -31,5 +31,21 @@ namespace Document_Archive.Viewer
                 Console.WriteLine(menuItem.Key.ToString() + ". " + menuItem.Value.Description);
             Console.WriteLine("0. Exit");
         }
+        public void ShowDataBaseItems(DataBaseDocuments dataBase)
+        {
+            foreach (Folder folder in dataBase.Folders)
+            {
+                Console.WriteLine(folder.ToString());
+                foreach (Document document in folder.Documents) Console.WriteLine(document.ToString(1));
+            }
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadLine();
+        }
+        public void ShowFolders(DataBaseDocuments dataBase)
+        {
+            foreach (Folder folder in dataBase.Folders) Console.WriteLine(folder.ToString());
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadLine();
+        }
     }
 }
