@@ -24,10 +24,13 @@ namespace Document_Archive.Model
         {
             Name = name;
         }
+        public override string ToString()
+        {
+            return "Id: " + Id + "; Name: " + Name;
+        }
     }
     public class Document
     {
-        static private int actualId = 0;
         public int Id { get; set; } //primary key
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
@@ -36,8 +39,8 @@ namespace Document_Archive.Model
 
         public override string ToString()
         {
-            string s = Name + ", category " + Category + ", created: " +
-                CreationDate.ToString("D");
+            string s = Name + ", category " + Category + (Folder == null ? 
+                ("") : (", folder in: " + Folder.Name)) + ", created: " + CreationDate.ToString("D");
             return s;
         }
     }

@@ -19,6 +19,22 @@ namespace Document_Archive.Model
     public class DataBaseDocuments : IDisposable
     {
         protected DbDocumentsDbContext dbc = new DbDocumentsDbContext();
+        public Document[] Documents 
+        { get 
+            {
+                _ = Folders;
+                Document[] documents = dbc.Documents.OrderBy(d => d.Folder.Name).ToArray();
+                return documents;
+
+            } 
+        }  
+        public Folder[] Folders
+        {
+            get
+            {
+                return dbc.Folders.OrderBy(f => f.Name).ToArray();
+            }
+        }
         public void Dispose()
         {
             dbc.Dispose();
@@ -27,7 +43,7 @@ namespace Document_Archive.Model
         {
             dbc.Database.EnsureCreated(); //create new data base if not exsist
         }
-        public Document GetDocument(int idDoc)
+        public Document GetDocumentById(int idDoc)
         {
             return dbc.Documents.FirstOrDefault(d => d.Id == idDoc);
         }
@@ -44,7 +60,7 @@ namespace Document_Archive.Model
             if (dbc.Documents.Any(d => d.Id == document.Id))
                 document.Id = dbc.Documents.Max(d => d.Id) + 1;
             //avoiding duplicate folders
-            Folder folder = dbc.Folders.FirstOrDefault(f => f.Name == document.Folder.Name);
+            Folder folder = dbc.Folders.ToArray().FirstOrDefault(f => f.Name == document.Folder.Name);
             if (folder != null) document.Folder = folder;
 
             dbc.Documents.Add(document);
