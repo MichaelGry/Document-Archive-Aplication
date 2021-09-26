@@ -26,7 +26,7 @@ namespace Document_Archive.Model
         }
         public override string ToString()
         {
-            return "Id: " + Id + "      Folder name: " + Name;
+            return "Id: " + Id + "\nFolder name: " + Name;
         }
     }
     public class Document
