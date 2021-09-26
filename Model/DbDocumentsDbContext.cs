@@ -10,14 +10,10 @@ namespace Document_Archive.Model
     public class DbDocumentsDbContext : DbContext
     {
         public DbSet<Document> Documents { get; set; }
-        public DbSet<Folder> Folders { get; set; }
+        public DbSet<Model.Folder> Folders { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlite("Data Source=documents.db");
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Document>().HasOne(d => d.Folder).WithMany(f => f.Documents);
         }
     }
     public class DataBaseDocuments : IDisposable
@@ -26,7 +22,10 @@ namespace Document_Archive.Model
         public Document[] Documents 
         { get 
             {
-                return dbc.Documents.Select(d => d).ToArray();
+                _ = Folders;
+                Document[] documents = dbc.Documents.OrderBy(d => d.Folder.Name).ToArray();
+                return documents;
+
             } 
         }  
         public Folder[] Folders
@@ -48,10 +47,6 @@ namespace Document_Archive.Model
         {
             return dbc.Documents.FirstOrDefault(d => d.Id == idDoc);
         }
-        public List<Folder> GetFullContentFolders()
-        {
-            return dbc.Folders.Include(f => f.Documents).ToList();
-        }
         public Folder GetFolder(int idF)
         {
             return dbc.Folders.FirstOrDefault(f => f.Id == idF);
@@ -66,10 +61,7 @@ namespace Document_Archive.Model
                 document.Id = dbc.Documents.Max(d => d.Id) + 1;
             //avoiding duplicate folders
             Folder folder = dbc.Folders.ToArray().FirstOrDefault(f => f.Name == document.Folder.Name);
-            if (folder != null) 
-            {
-                document.Folder = folder;
-            }
+            if (folder != null) document.Folder = folder;
 
             dbc.Documents.Add(document);
             dbc.SaveChanges();
