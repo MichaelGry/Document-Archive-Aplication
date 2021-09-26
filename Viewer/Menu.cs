@@ -24,7 +24,8 @@ namespace Document_Archive.Viewer
                     MenuItems[yourChoose].action();
                 } catch (Exception exc) 
                 {
-                    Console.Error.WriteLine("Error with menu action ->\n" + exc.Message);
+                    Console.Error.WriteLine("Error with menu action -> \"" + MenuItems[yourChoose].Description +
+                        "\"\n" + exc.Message);
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadLine();
                 }
