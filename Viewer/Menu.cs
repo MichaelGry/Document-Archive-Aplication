@@ -22,28 +22,41 @@ namespace Document_Archive.Viewer
                 try
                 {
                     MenuItems[yourChoose].action();
-                } catch (Exception exc) { }
+                } catch (Exception exc) 
+                {
+                    Console.Error.WriteLine("Error with menu action ->\n" + exc.Message);
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadLine();
+                }
             } while (yourChoose != 0);
         }
         protected void ShowItems()
         {
             foreach (KeyValuePair<int, MenuItem> menuItem in MenuItems)
-                Console.WriteLine(menuItem.Key.ToString() + ". " + menuItem.Value.Description);
-            Console.WriteLine("0. Exit");
+                if (menuItem.Key != 0) 
+                    Console.WriteLine(menuItem.Key.ToString() + ". " + menuItem.Value.Description);
+
+            if (MenuItems.ContainsKey(0)) Console.WriteLine("0. " + MenuItems[0].Description);
         }
         public void ShowDataBaseItems(DataBaseDocuments dataBase)
         {
-            foreach (Folder folder in dataBase.Folders)
+            foreach (Folder folder in dataBase.GetFullContentFolders())
             {
                 Console.WriteLine(folder.ToString());
-                foreach (Document document in folder.Documents) Console.WriteLine(document.ToString(1));
+                foreach (Document document in folder.Documents.OrderBy(d => d.Category)) Console.WriteLine(
+                    "".PadRight(4).PadRight(31, '.') + "\n" + document.ToString(1));
+                Console.WriteLine("".PadLeft(35, '-'));
             }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadLine();
         }
         public void ShowFolders(DataBaseDocuments dataBase)
         {
-            foreach (Folder folder in dataBase.Folders) Console.WriteLine(folder.ToString());
+            foreach (Folder folder in dataBase.Folders)
+            {
+                Console.WriteLine(folder.ToString());
+                Console.WriteLine("".PadLeft(35, '-'));
+            }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadLine();
         }
