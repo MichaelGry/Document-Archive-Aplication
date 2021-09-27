@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Document_Archive.Model;
+using Document_Archive.Controler;
 
 namespace Document_Archive.Viewer
 {
     public class Menu
     {
         public SortedList<int, MenuItem> MenuItems = new();
-        public void ShowMenu()
+        public void ShowMenu() 
         {
             int yourChoose = 0;
             do
@@ -59,6 +60,13 @@ namespace Document_Archive.Viewer
             }
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadLine();
+        }
+        public void DeleteDocumentByNameOrId(DataBaseDocuments dataBase)
+        {
+            Console.WriteLine("\nDeleting data. Enter a name or id.\n" +
+                "If you enter an id, precede the number with the word \"id\" e.g. \"id 5\"");
+            string nameOrId = Console.ReadLine();
+            if (nameOrId[1] == 'd') ;
         }
     }
 }

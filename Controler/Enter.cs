@@ -57,5 +57,9 @@ namespace Document_Archive.Controler
             } while (dateTime == null);
             return (DateTime)dateTime;
         }
+        public static string GetStringFromUser()
+        {
+            return "";
+        }
     }
 }
