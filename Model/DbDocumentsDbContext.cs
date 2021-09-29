@@ -23,17 +23,17 @@ namespace Document_Archive.Model
     public class DataBaseDocuments : IDisposable
     {
         protected DbDocumentsDbContext dbc = new DbDocumentsDbContext();
-        public Document[] Documents 
+        public List<Document> Documents 
         { get 
             {
-                return dbc.Documents.Select(d => d).ToArray();
+                return dbc.Documents.Select(d => d).ToList();
             } 
         }  
-        public Folder[] Folders
+        public List<Folder> Folders
         {
             get
             {
-                return dbc.Folders.OrderBy(f => f.Name).ToArray();
+                return dbc.Folders.OrderBy(f => f.Name).ToList();
             }
         }
         public void Dispose()
@@ -76,6 +76,22 @@ namespace Document_Archive.Model
             Console.WriteLine("Added succesfull.\nPress any key to continue...");
             Console.ReadLine();
             return document.Id;
+        }
+        public void DeleteDocumentById(int id)
+        {
+            try
+            {
+                Document docToDelete = Documents.FirstOrDefault(d => d.Id == id);
+                dbc.Documents.Remove(docToDelete);
+                if (docToDelete.Folder.Documents.Count == 1) dbc.Folders.Remove(docToDelete.Folder);
+            } 
+            catch (Exception exc)
+            {
+                Console.WriteLine("Failure while deleting document\n" + exc.Message);
+            }
+            dbc.SaveChanges();
+            Console.WriteLine("Deletin sucessfull\nPress any key to continue...");
+            _ = Console.ReadKey();
         }
     }
 }

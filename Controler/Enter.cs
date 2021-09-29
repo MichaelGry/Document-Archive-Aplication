@@ -57,9 +57,42 @@ namespace Document_Archive.Controler
             } while (dateTime == null);
             return (DateTime)dateTime;
         }
-        public static string GetStringFromUser()
+        public static int GetCharFromUser(string label, params char[] allowsChars)
         {
-            return "";
+            int charFromUser;
+            Console.WriteLine(label);
+            do
+            {
+                charFromUser = Console.ReadKey().KeyChar;
+            }
+            while (!allowsChars.Contains(((char)charFromUser)));
+            return charFromUser;
+        }
+        public static string GetStringFromUser(string label, int maxSize = 40)
+        {
+            Console.WriteLine(label);
+            string myString = Console.ReadLine();
+            return myString.Length > maxSize ? myString.Substring(0, maxSize) : myString;
+        }
+        public static int? GetOneDocumentFromMany(string label, Document[] documents)
+        {
+            foreach (Document doc in documents) Console.WriteLine("Id [" + doc.Id + "] " + doc.ToString());
+            return GetIntOrNullFromMany(label, documents.Select(d => d.Id).ToArray());
+        } 
+        public static int? GetIntOrNullFromMany(string label, params int[] intArrey)
+        {
+            Console.WriteLine(label);
+            int? myInt;
+            try
+            {
+                myInt = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+                myInt = null;
+            }
+            if (intArrey.Contains(myInt.Value)) return myInt;
+            else return null;
         }
     }
 }

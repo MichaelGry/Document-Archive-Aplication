@@ -19,13 +19,15 @@ namespace Document_Archive.Viewer
                 Console.Clear();
                 Console.WriteLine("Welcome to your private document archive!\n\nMenu:");
                 ShowItems();
-                yourChoose = Controler.Enter.InputIntFromKeyboard("Choose from menu");
+                yourChoose = Enter.InputIntFromKeyboard("Choose from menu");
                 try
                 {
-                    MenuItems[yourChoose].action();
+                   if (MenuItems.ContainsKey(yourChoose)) MenuItems[yourChoose].action();
                 } catch (Exception exc) 
                 {
-                    Console.Error.WriteLine("Error with menu action -> \n" + exc.Message);
+                    Console.Error.WriteLine("Error with menu action -> " + 
+                        (MenuItems.ContainsKey(yourChoose) ? MenuItems[yourChoose].Description : "") + 
+                        "\n" + exc.Message);
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadLine();
                 }
@@ -48,8 +50,8 @@ namespace Document_Archive.Viewer
                     "".PadRight(4).PadRight(31, '.') + "\n" + document.ToString(1));
                 Console.WriteLine("".PadLeft(35, '-'));
             }
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadLine();
+            Console.WriteLine("\nPress Enter to continue...");
+            _ = Console.ReadLine();
         }
         public void ShowFolders(DataBaseDocuments dataBase)
         {
@@ -63,10 +65,34 @@ namespace Document_Archive.Viewer
         }
         public void DeleteDocumentByNameOrId(DataBaseDocuments dataBase)
         {
-            Console.WriteLine("\nDeleting data. Enter a name or id.\n" +
-                "If you enter an id, precede the number with the word \"id\" e.g. \"id 5\"");
-            string nameOrId = Console.ReadLine();
-            if (nameOrId[1] == 'd') ;
+            int noi; //name or id
+            string label = ("\nDeleting data. Enter a name or id.\n" +
+                "Press N (name) or I (id)...");
+            int? idToDelete = null;
+
+            noi = Enter.GetCharFromUser(label, 'n', 'N', 'i', 'I', ((char)ConsoleKey.Escape));
+            if (noi == ((char)ConsoleKey.Escape)) return;
+            if (noi == 'n' || noi == 'N')
+            {
+                string name = Enter.GetStringFromUser("\nDocument name to delete:");
+                var DocToDelete = dataBase.Documents.Where(d => d.Name == name);
+                if (DocToDelete.ToList().Count == 0)
+                {
+                    Console.WriteLine("No document with the specified name\nPress any key to continue...");
+                    _ = Console.ReadKey();
+                    return;
+                } // if no name
+                else if (DocToDelete.ToList().Count == 1) // id doc name = 1
+                {
+                    idToDelete = DocToDelete.ToList()[0].Id;
+                }
+                else // if doc name > 1
+                {
+                    Console.WriteLine("There is more then one documenta with that name");
+                    idToDelete = Enter.GetOneDocumentFromMany("Choose document's id to delete:", DocToDelete.ToArray());
+                }
+            } //delete the document with the specified name
+            if (idToDelete != null) dataBase.DeleteDocumentById(idToDelete.Value);
         }
     }
 }
