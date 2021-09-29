@@ -19,7 +19,7 @@ namespace Document_Archive.Viewer
                 Console.Clear();
                 Console.WriteLine("Welcome to your private document archive!\n\nMenu:");
                 ShowItems();
-                yourChoose = Enter.InputIntFromKeyboard("Choose from menu");
+                yourChoose = Enter.GetIntFromUser("Choose from menu");
                 try
                 {
                    if (MenuItems.ContainsKey(yourChoose)) MenuItems[yourChoose].action();
@@ -92,6 +92,11 @@ namespace Document_Archive.Viewer
                     idToDelete = Enter.GetOneDocumentFromMany("Choose document's id to delete:", DocToDelete.ToArray());
                 }
             } //delete the document with the specified name
+            else
+            {
+                idToDelete = Enter.GetIntFromUser("Enter document's id to delete:");
+
+            }
             if (idToDelete != null) dataBase.DeleteDocumentById(idToDelete.Value);
         }
     }

@@ -82,16 +82,22 @@ namespace Document_Archive.Model
             try
             {
                 Document docToDelete = Documents.FirstOrDefault(d => d.Id == id);
+                if (docToDelete == null)
+                {
+                    Console.WriteLine("No document with id " + id + "\nPress any key to continue...");
+                    _ = Console.ReadKey();
+                    return;
+                }
                 dbc.Documents.Remove(docToDelete);
                 if (docToDelete.Folder.Documents.Count == 1) dbc.Folders.Remove(docToDelete.Folder);
+                dbc.SaveChanges();
+                Console.WriteLine("Deletin sucessfull\nPress any key to continue...");
+                _ = Console.ReadKey();
             } 
             catch (Exception exc)
             {
                 Console.WriteLine("Failure while deleting document\n" + exc.Message);
             }
-            dbc.SaveChanges();
-            Console.WriteLine("Deletin sucessfull\nPress any key to continue...");
-            _ = Console.ReadKey();
         }
     }
 }

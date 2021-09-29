@@ -9,12 +9,12 @@ namespace Document_Archive.Controler
 {
     static class Enter
     {
-        public static int InputIntFromKeyboard(string subtitle="Input the int data")
+        public static int GetIntFromUser(string subtitle="Input the int data")
         {
             int input = 0;
             try
             {
-                Console.Write(subtitle + ": ");
+                Console.WriteLine(subtitle);
                 input = int.Parse(Console.ReadLine());
                 return input;
             }
@@ -63,7 +63,7 @@ namespace Document_Archive.Controler
             Console.WriteLine(label);
             do
             {
-                charFromUser = Console.ReadKey().KeyChar;
+                charFromUser = Console.ReadKey(true).KeyChar;
             }
             while (!allowsChars.Contains(((char)charFromUser)));
             return charFromUser;
