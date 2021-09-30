@@ -13,7 +13,7 @@ namespace Document_Archive.Viewer
         public SortedList<int, MenuItem> MenuItems = new();
         public void ShowMenu() 
         {
-            int yourChoose = 0;
+            int yourChoose;
             do
             {
                 Console.Clear();
@@ -41,14 +41,24 @@ namespace Document_Archive.Viewer
 
             if (MenuItems.ContainsKey(0)) Console.WriteLine("0. " + MenuItems[0].Description);
         }
+        protected static void ShowFolderContent(Folder folder, bool stopAfterShowing = true)
+        {
+            Console.WriteLine(folder.ToString());
+            foreach (Document document in folder.Documents.OrderBy(d => d.Category)) Console.WriteLine(
+                "".PadRight(4).PadRight(31, '.') + "\n" + document.ToString(1));
+            Console.WriteLine("".PadLeft(35, '-'));
+
+            if(stopAfterShowing)
+            {
+                Console.WriteLine("\nPress Enter to continue...");
+                _ = Console.ReadLine();
+            }
+        }
         public void ShowDataBaseItems(DataBaseDocuments dataBase)
         {
             foreach (Folder folder in dataBase.GetFullContentFolders())
             {
-                Console.WriteLine(folder.ToString());
-                foreach (Document document in folder.Documents.OrderBy(d => d.Category)) Console.WriteLine(
-                    "".PadRight(4).PadRight(31, '.') + "\n" + document.ToString(1));
-                Console.WriteLine("".PadLeft(35, '-'));
+                ShowFolderContent(folder, false);
             }
             Console.WriteLine("\nPress Enter to continue...");
             _ = Console.ReadLine();
@@ -98,6 +108,21 @@ namespace Document_Archive.Viewer
 
             }
             if (idToDelete != null) dataBase.DeleteDocumentById(idToDelete.Value);
+        }
+        public void ShowSpecificFolder(DataBaseDocuments dataBase)
+        {
+            string label = "Enter the name of the folder you want to view";
+            Folder myFolder = dataBase.GetFolderByName(Enter.GetStringFromUser(label));
+            if (myFolder != null)
+            {
+                ShowFolderContent(myFolder);
+            }
+            else
+            {
+                Console.WriteLine("No folder with that name was found.\n" + 
+                    "Press aby key to continue...");
+                _ = Console.ReadKey();
+            }
         }
     }
 }
