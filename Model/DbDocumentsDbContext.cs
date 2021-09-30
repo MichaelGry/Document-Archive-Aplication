@@ -52,9 +52,17 @@ namespace Document_Archive.Model
         {
             return dbc.Folders.Include(f => f.Documents).ToList();
         }
-        public Folder GetFolder(int idF)
+        public Folder GetFolderByName(string name)
         {
-            return dbc.Folders.FirstOrDefault(f => f.Id == idF);
+            try
+            {
+                return dbc.Folders.Include(f => f.Documents).FirstOrDefault(f => f.Name == name);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine("An error occured while downloading a folder\n" + exc.Message);
+                return null;
+            }
         }
         public int AddDocumentToDb(Document document)
         {

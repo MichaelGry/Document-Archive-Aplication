@@ -99,5 +99,9 @@ namespace Document_Archive.Viewer
             }
             if (idToDelete != null) dataBase.DeleteDocumentById(idToDelete.Value);
         }
+        public void ShowSpecificFolder(DataBaseDocuments dataBase)
+        {
+
+        }
     }
 }
