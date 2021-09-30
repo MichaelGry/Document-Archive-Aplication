@@ -60,7 +60,9 @@ namespace Document_Archive.Model
             }
             catch (Exception exc)
             {
-                Console.WriteLine("An error occured while downloading a folder\n" + exc.Message);
+                Console.WriteLine("An error occured while downloading a folder\n" + exc.Message + 
+                    "\n\nPress aby key to continue...");
+                _ = Console.ReadKey();
                 return null;
             }
         }
