@@ -13,7 +13,7 @@ namespace Document_Archive.Viewer
         public SortedList<int, MenuItem> MenuItems = new();
         public void ShowMenu() 
         {
-            int yourChoose = 0;
+            int yourChoose;
             do
             {
                 Console.Clear();
@@ -98,6 +98,10 @@ namespace Document_Archive.Viewer
 
             }
             if (idToDelete != null) dataBase.DeleteDocumentById(idToDelete.Value);
+        }
+        public void ShowSpecificFolder(DataBaseDocuments dataBase)
+        {
+
         }
     }
 }

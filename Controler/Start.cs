@@ -20,11 +20,13 @@ namespace Document_Archive.Controler
             Action showDocuments = () => { MyMenu.ShowDataBaseItems(dataBase); };
             Action showFolders = () => { MyMenu.ShowFolders(dataBase); };
             Action deleteDocument = () => { MyMenu.DeleteDocumentByNameOrId(dataBase); };
+            Action showDocumentsFromFolder = () => { MyMenu.ShowSpecificFolder(dataBase); };
             
             MyMenu.MenuItems.Add(1, new MenuItem("Add new document to your repository", addDocument));
             MyMenu.MenuItems.Add(2, new MenuItem("Show your all documents", showDocuments));
             MyMenu.MenuItems.Add(3, new MenuItem("Show your all folders", showFolders));
             MyMenu.MenuItems.Add(4, new MenuItem("Delete document from your repository", deleteDocument));
+            MyMenu.MenuItems.Add(5, new MenuItem("Show documents from folder", showDocumentsFromFolder));
             MyMenu.MenuItems.Add(0, new MenuItem("Exit", exitApp));
             #endregion
             MyMenu.ShowMenu();

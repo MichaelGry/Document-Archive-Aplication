@@ -11,7 +11,7 @@ namespace Document_Archive.Controler
     {
         public static int GetIntFromUser(string subtitle="Input the int data")
         {
-            int input = 0;
+            int input;
             try
             {
                 Console.WriteLine(subtitle);
