@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Xml.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -108,6 +108,32 @@ namespace Document_Archive.Model
             {
                 Console.WriteLine("Failure while deleting document\n" + exc.Message);
             }
+        }
+        public void SaveToXml(string path)
+        {
+            XDocument xDocument = new(
+                new XDeclaration("1.0", "utf-8", "yes"),
+                new XElement("folders", 
+                    from folder in GetFullContentFolders()
+                    orderby folder.Name
+                    select new XElement("folder",
+                        new XAttribute("id", folder.Id.ToString()),
+                        new XElement("name", folder.Name),
+                        new XElement("documents", 
+                            from document in folder.Documents
+                            select new XElement("document",
+                                new XAttribute("id", document.Id.ToString()),
+                                new XElement("name", document.Name),
+                                new XElement("category", document.Category),
+                                new XElement("creation_date", document.CreationDate.ToString("D"))
+                            )
+                        )
+                    )
+                )
+            );
+            xDocument.Save(path);
+            Console.WriteLine("Export to xml file successful\nPress enter to continue...");
+            _ = Console.ReadLine();
         }
     }
 }

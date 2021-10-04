@@ -24,6 +24,10 @@ namespace Document_Archive.Model
         {
             Name = name;
         }
+        public Folder()
+        {
+
+        }
         public override string ToString()
         {
             return "Id: " + Id + "\nFolder name: " + Name + ", Number of documents " + Documents.Count;
