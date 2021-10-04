@@ -46,10 +46,15 @@ namespace Document_Archive.Controler
             do
             {
                 Console.WriteLine("Specify date of document creation with format year/month/day: ");
-                string[] date = Console.ReadLine().Split(' ', '/', '.', '-');
+                string date = Console.ReadLine();
+                if(date == "t" || date == "T")
+                {
+                    return DateTime.Today;
+                }
+                string[] dateSplit = date.Split(' ', '/', '.', '-');
                 try
                 {
-                    dateTime = new DateTime(int.Parse(date[0]), int.Parse(date[1]), int.Parse(date[2]));
+                    dateTime = new DateTime(int.Parse(dateSplit[0]), int.Parse(dateSplit[1]), int.Parse(dateSplit[2]));
                 } catch (Exception exc)
                 {
                     Console.WriteLine("Date given in wrong format. Error: " + exc.Message);
