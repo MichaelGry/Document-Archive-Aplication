@@ -124,5 +124,34 @@ namespace Document_Archive.Viewer
                 _ = Console.ReadKey();
             }
         }
+        public void ShowSpecificDocuments(DataBaseDocuments dataBase)
+        {
+            string[] labels =
+            {
+                "Enter document details. Leave blank if you want to skip.\n\nName:",
+                "Folder:",
+                "Category:",
+                "Creation date from (year/month/day):",
+                "Creation day to (year/month/day):"
+            };
+            string name = Enter.GetStringFromUser(labels[0]);
+            string folder = Enter.GetStringFromUser(labels[1]);
+            string category = Enter.GetStringFromUser(labels[2]);
+            DateTime? dateTimeFrom = Enter.InputDateTime(labels[3], true);
+            DateTime? dateTimeTo = Enter.InputDateTime(labels[4], true);
+
+            var specificDocuments = dataBase.GetFullContentDocuments().Select(d => d)
+                .Where(d => String.IsNullOrEmpty(name) ? true : d.Name == name)
+                .Where(d => String.IsNullOrEmpty(folder) ? true : d.Folder.Name == folder)
+                .Where(d => String.IsNullOrEmpty(category) ? true : d.Category == category)
+                .Where(d => dateTimeFrom == null ? true : d.CreationDate >= dateTimeFrom)
+                .Where(d => dateTimeTo == null ? true : d.CreationDate <= dateTimeTo)
+                .OrderBy(d => d.Folder.Name);
+
+            foreach (Document document in specificDocuments.ToList()) Console.WriteLine(document.ToString()
+                + "\n".PadRight(35, '-'));
+            Console.WriteLine("Press any key to continue...");
+            _ = Console.ReadKey();
+        }
     }
 }

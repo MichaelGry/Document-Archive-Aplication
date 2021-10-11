@@ -33,24 +33,25 @@ namespace Document_Archive.Controler
             document.Name = Console.ReadLine();
             Console.WriteLine("Category: ");
             document.Category = Console.ReadLine();
-            document.CreationDate = InputDateTime().Date;
+            document.CreationDate = InputDateTime("Specify date of document creation with format year / month / day: ").Value.Date;
 
             Console.WriteLine("Folder it is in: ");
             document.Folder = new Folder(Console.ReadLine());
 
             return document;
         }
-        public static DateTime InputDateTime()
+        public static DateTime? InputDateTime(string label = "year/month/day:", bool isNullable = false)
         {
             DateTime? dateTime = null;
             do
             {
-                Console.WriteLine("Specify date of document creation with format year/month/day: ");
+                Console.WriteLine(label);
                 string date = Console.ReadLine();
                 if(date == "t" || date == "T")
                 {
                     return DateTime.Today;
                 }
+                if (isNullable && String.IsNullOrEmpty(date)) return null;
                 string[] dateSplit = date.Split(' ', '/', '.', '-');
                 try
                 {

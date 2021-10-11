@@ -43,8 +43,9 @@ namespace Document_Archive.Model
 
         public override string ToString()
         {
-            string s = Name + ", category " + Category + (Folder == null ? 
-                ("") : (", folder in: " + Folder.Name)) + ", created: " + CreationDate.ToString("D");
+            string s = "**" + Name.ToUpper() + "**\ncategory:".PadRight(17) + Category + (Folder == null ? 
+                ("") : ("\nfolder in:".PadRight(15) + Folder.Name)) + 
+                "\ncreated:".PadRight(15) + CreationDate.ToString("D");
             return s;
         }
         public string ToString(int indentationLevel)

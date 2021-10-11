@@ -52,6 +52,10 @@ namespace Document_Archive.Model
         {
             return dbc.Folders.Include(f => f.Documents).ToList();
         }
+        public List<Document> GetFullContentDocuments()
+        {
+            return dbc.Documents.Include(d => d.Folder).ToList();
+        }
         public Folder GetFolderByName(string name)
         {
             try
